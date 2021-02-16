@@ -1,7 +1,8 @@
-package stepDefinitions;
+package helpers;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import java.io.File;
 
 import static io.restassured.RestAssured.given;
 
@@ -16,6 +17,19 @@ public class RESTHelper {
                 .log().method()
                 .log().body()
                 .when()
+                .post(endpoint)
+                .then()
+                .statusCode(200)
+                .log()
+                .all()
+                .extract()
+                .response();
+    }
+
+
+    public static Response uploadFile(String endpoint, File file) {
+        return given()
+                .multiPart("file", file, "multipart/form-data")
                 .post(endpoint)
                 .then()
                 .statusCode(200)
