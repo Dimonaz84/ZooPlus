@@ -15,11 +15,9 @@ public class TestContext {
         scenarioContext.put(key, value);
     }
 
-    public Object getContext(String key){
-        return scenarioContext.get(key).toString();
-    }
+    public boolean isEmpty(){ return scenarioContext.isEmpty(); }
 
-    public Boolean isContains(String key){
-        return scenarioContext.containsKey(key);
+    public Map<String, Object> getContext(){
+        return scenarioContext;
     }
 }
