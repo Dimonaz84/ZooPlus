@@ -3,12 +3,12 @@ Feature: Pets
   Scenario: create a pet
     Given user creates new pet "Lemmy"
     And user uploads a picture for the pet
-    Then pet with the given "Lemmy" is available
+    Then user verifies if pet with the given "Lemmy" is available
 
   Scenario Outline: update a pet
     Given user creates new pet <name>
     And user updates the pet name to <new_name>
-    Then pet with the given <new_name> is available
+    Then user verifies if pet with the given <new_name> is available
 
     Examples:
       |name   | new_name |

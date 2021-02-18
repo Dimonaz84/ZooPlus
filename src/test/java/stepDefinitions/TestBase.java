@@ -12,6 +12,6 @@ public class TestBase {
     public TestBase(){
         LOGGER.info("Initializing TestBase class...");
         System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "INFO");
-        context = new TestContext();
+        context = TestContext.getInstance();
     }
 }

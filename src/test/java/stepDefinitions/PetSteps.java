@@ -66,6 +66,16 @@ public class PetSteps extends TestBase{
         context.setContext(String.valueOf(createdId), pet);
     }
 
+    @Then("user gets {string} status code")
+    public void userGetsErrorMessage(String expectedCode) {
+
+        Assert.assertFalse("Status code has not been provided in text context", context.isEmpty());
+
+        String code = context.getContext().get("code").toString();
+
+        Assert.assertEquals("Status code is not " +  expectedCode, expectedCode, code);
+    }
+
     @When("user uploads a picture for the pet")
     public void userUploadsPicture() {
 
@@ -88,7 +98,7 @@ public class PetSteps extends TestBase{
         Assert.assertTrue("File has not been uploaded", message.contains("File uploaded to ./cat.jpg"));
     }
 
-    @Then("pet with the given {string} is available")
+    @Then("user verifies if pet with the given {string} is available")
     public void petIsAvailable(String name) {
 
         Assert.assertFalse("Pet has not been created in previous step", context.isEmpty());
@@ -139,6 +149,8 @@ public class PetSteps extends TestBase{
     @And("user updates the pet name to {string}")
     public void userUpdatesPetName(String newName) {
 
+        LOGGER.info("Updating the pet");
+
         Assert.assertFalse("Pet has not been created in previous step", context.isEmpty());
         String petId = "";
         for(Map.Entry<String, Object> entry: context.getContext().entrySet()) {
@@ -157,6 +169,7 @@ public class PetSteps extends TestBase{
 
         response = put(PET_ENDPOINT, body);
         Assert.assertEquals("Status code is not 200", 200, response.getStatusCode());
+        context.setContext("code", response.getStatusCode());
     }
 
     @Then("pet {string} is available with status {string}")
@@ -218,6 +231,7 @@ public class PetSteps extends TestBase{
 
         String endpoint = PET_ENDPOINT + "/" + petId;
         response = delete(endpoint);
+        context.setContext("code", response.getStatusCode());
 
         Assert.assertEquals("Status code is not 200", 200, response.getStatusCode());
     }
